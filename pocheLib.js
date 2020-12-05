@@ -14,6 +14,10 @@ title.classList.add('col-10');
 
 var addBookDiv = document.querySelector('.addBook');
 
+var searchResults = document.createElement('div');
+searchResults.classList.add('results');
+content.after(searchResults);
+
 //Add Form on click
 function addBook() {
   addBookDiv.innerHTML = `
@@ -42,8 +46,6 @@ function searchBook() {
   let author = authorInput.value;
   axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&key=${apiKey}`)
     .then((results) => {
-      var searchResults = document.createElement('div');
-      searchResults.classList.add('results');
       console.log(results);
       for(let i = 0; i < results.data.items.length; i++){
 
@@ -79,7 +81,6 @@ function searchBook() {
           </div>
         </div>`
       }
-      content.after(searchResults);
     })
     .catch((err) => {
       console.log(err);
@@ -91,4 +92,5 @@ function searchBook() {
 function cancel() {
   addBookDiv.innerHTML = `
     <button onclick="addBook()" type="button" class="btn-add btn btn-info">Ajouter un livre</button>`;
+  searchResults.innerHTML = '';
 }
