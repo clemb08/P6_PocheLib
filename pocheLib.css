@@ -1,0 +1,25 @@
+h2 {
+  text-align: center;
+}
+
+.title {
+  margin: 0 auto;
+  text-align: center;
+  background-color: #eae5e5;
+  border-bottom: 5px outset #ab9996;
+  border-left: 5px outset #ab9996;
+  border-right: 5px outset #ab9996;
+}
+
+.logo {
+  background-color: #eae5e5;
+}
+
+.addBook {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form-group {
+  margin-top: 25px;
+}
