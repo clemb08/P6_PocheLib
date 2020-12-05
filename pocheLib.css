@@ -23,3 +23,50 @@ h2 {
 .form-group {
   margin-top: 25px;
 }
+
+.results {
+  text-align: center;
+}
+
+.card {
+  display: inline-block !important;
+  margin: 10px;
+  padding: 0 !important;
+  text-align: left;
+}
+
+.bookmark {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 1;
+}
+
+.card-body {
+  padding: 5px !important;
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.auteur {
+  font-size: 10px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  font-size: 10px;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.id {
+  font-size: 10px;
+}
