@@ -28,6 +28,10 @@ h2 {
   text-align: center;
 }
 
+.pochList {
+  text-align: center;
+}
+
 .card {
   display: inline-block !important;
   margin: 10px;
@@ -36,6 +40,13 @@ h2 {
 }
 
 .bookmark {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 1;
+}
+
+.trash {
   position: absolute;
   top: 5px;
   left: 0;
