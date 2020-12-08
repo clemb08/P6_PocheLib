@@ -75,33 +75,33 @@ function searchBook() {
   let title = titleInput.value;
   let author = authorInput.value;
 
-  if (title === '' || author === '') {
+  if(title === '' || author === '') {
     validationMessage.innerHTML = `
     <p class="errorMessage">Vous devez fournir une valeur aux deux champs pour lancer la recherche !</p>`;
   } else {
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&key=${apiKey}`)
-      .then((results) => {
-        validationMessage.innerHTML = '';
-        console.log(results);
-        search = results.data.items;
-        if (results.data.items.length === 0) {
-          searchResults.innerHTML = `Aucun livre n'a été trouvé...`;
-        } else {
-          for (let i = 0; i < results.data.items.length; i++) {
+    .then((results) => {
+      validationMessage.innerHTML = '';
+      console.log(results);
+      search = results.data.items;
+      if (results.data.items.length === 0) {
+        searchResults.innerHTML = `Aucun livre n'a été trouvé...`;
+      } else {
+        for (let i = 0; i < results.data.items.length; i++) {
 
-            let image;
-            if (results.data.items[i].volumeInfo.imageLinks === undefined) {
-              image = "unavailable.png"
-            } else {
-              image = results.data.items[i].volumeInfo.imageLinks.thumbnail;
-            }
+          let image;
+          if (results.data.items[i].volumeInfo.imageLinks === undefined) {
+            image = "unavailable.png"
+          } else {
+            image = results.data.items[i].volumeInfo.imageLinks.thumbnail;
+          }
 
-            let description = results.data.items[i].volumeInfo.description;
-            if (description === undefined) {
-              description = "Information manquante...";
-            }
+          let description = results.data.items[i].volumeInfo.description;
+          if (description === undefined) {
+            description = "Information manquante...";
+          }
 
-            searchResults.innerHTML += `
+          searchResults.innerHTML += `
           <div class="card col-xl-3 col-md-5 col-10">
               <svg class="bookmark" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="#40C3AC" xmlns="http://www.w3.org/2000/svg">
                 <path onclick="storeBook('${results.data.items[i].id}')" fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
@@ -120,12 +120,12 @@ function searchBook() {
               </div>
             </div>
           </div>`
-          }
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 }
 
@@ -141,10 +141,7 @@ function cancel() {
 function deleteBook(bookId) {
   pochList = pochList.filter(book => book.id !== bookId);
   sessionStorage.setItem('savedBooks', JSON.stringify(pochList));
-  alertMessage.innerHTML = `
-  <div class="alert alert-success" role="alert">
-    Le livre a été supprimmé de votre Poch'List !
-  </div>`;
+  displayMessage('danger', "Le livre a été supprimmé de votre Poch'List ");
   displayPochList();
 }
 
@@ -199,7 +196,8 @@ function storeBook(bookId) {
 //--------------------------UTIL FUNCTIONS------------------------------------
 function displayPochList() {
   pochListDiv.innerHTML = '';
-  pochListDiv.innerHTML += `
+  for (let i = 0; i < pochList.length; i++) {
+    pochListDiv.innerHTML += `
           <div class="card col-xl-3 col-md-5 col-10">
             <svg class="trash" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
               <path onclick="deleteBook('${pochList[i].id}')" fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
@@ -218,6 +216,7 @@ function displayPochList() {
               </div>
             </div>
           </div>`
+  }
 }
 
 function displayMessage(type, message) {
@@ -225,9 +224,7 @@ function displayMessage(type, message) {
   <div class="alert alert-${type}" role="alert">
     ${message}
   </div>`;
-  setTimeout(() => {
-    alertMessage.innerHTML = ''
-  }, 4000);
+  setTimeout(() => {alertMessage.innerHTML = ''}, 4000);
 }
 
 //TODO : Hover pour le bookmark et Trash
