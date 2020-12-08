@@ -20,6 +20,10 @@ var addBookDiv = document.querySelector('.addBook');
 
 title.classList.add('col-10');
 
+//Create Validation error message div
+let validationMessage = document.createElement('div');
+btnAdd.after(validationMessage);
+
 //Create SearchResults Div
 var searchResults = document.createElement('div');
 searchResults.classList.add('results');
@@ -50,7 +54,7 @@ function addBook() {
     <div class="col-10 form-group row">
       <label class="col-3 col-form-label" for="title">Titre du livre</label>
         <div class="col-8">
-          <input class="form-control" type="text" name="title" id="title" placeholder="Titre du livre">
+          <input class="form-control" type="text" name="title" id="title" placeholder="Titre">
         </div>
     </div>
     <div class="col-10 form-group row">
@@ -70,8 +74,14 @@ function searchBook() {
   const authorInput = document.getElementById('author');
   let title = titleInput.value;
   let author = authorInput.value;
-  axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&key=${apiKey}`)
+
+  if(title === '' || author === '') {
+    validationMessage.innerHTML = `
+    <p class="errorMessage">Vous devez fournir une valeur aux deux champs pour lancer la recherche !</p>`;
+  } else {
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}&key=${apiKey}`)
     .then((results) => {
+      validationMessage.innerHTML = '';
       console.log(results);
       search = results.data.items;
       if (results.data.items.length === 0) {
@@ -97,10 +107,10 @@ function searchBook() {
                 <path onclick="storeBook('${results.data.items[i].id}')" fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
               </svg>
             <div class="row no-gutters">
-              <div class="col-md-4">
+              <div class="col-4">
                 <img src="${image}" class="card-img-top" alt="${results.data.items[i].volumeInfo.title}">
               </div>
-              <div class="col-md-8">
+              <div class="col-8">
                 <div class="card-body">
                   <h5 class="card-title">${results.data.items[i].volumeInfo.title}</h5>
                   <p class="auteur card-text">Auteur : <strong>${results.data.items[i].volumeInfo.authors[0]}</strong></p>
@@ -116,6 +126,7 @@ function searchBook() {
     .catch((err) => {
       console.log(err);
     })
+  }
 }
 
 
@@ -206,10 +217,10 @@ function displayPochList() {
               <path onclick="deleteBook('${pochList[i].id}')" fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
             </svg>
             <div class="row no-gutters">
-              <div class="col-md-4">
+              <div class="col-4">
                 <img src="${image}" class="card-img-top" alt="${pochList[i].title}">
               </div>
-              <div class="col-md-8">
+              <div class="col-8">
                 <div class="card-body">
                   <h5 class="card-title">${pochList[i].title}</h5>
                   <p class="auteur card-text">Auteur : <strong>${pochList[i].author}</strong></p>
@@ -229,3 +240,5 @@ function displayMessage(type, message) {
   </div>`;
   setTimeout(() => {alertMessage.innerHTML = ''}, 4000);
 }
+
+//TODO : Hover pour le bookmark et Trash
