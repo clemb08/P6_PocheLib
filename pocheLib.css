@@ -25,9 +25,10 @@ h2 {
 }
 
 .errorMessage {
-  font-size: 10px;
+  font-size: 13px;
   color: red;
   text-align: center;
+  margin-top: 5px;
 }
 
 .results {

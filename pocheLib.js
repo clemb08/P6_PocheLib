@@ -52,7 +52,7 @@ function addBook() {
   addBookDiv.innerHTML = `
   <form>
     <div class="col-10 form-group row">
-      <label class="col-3 col-form-label" for="title">Titre du livre</label>
+      <label class="col-3 col-form-label" for="title">Titre</label>
         <div class="col-8">
           <input class="form-control" type="text" name="title" id="title" placeholder="Titre">
         </div>
@@ -84,14 +84,14 @@ function searchBook() {
       validationMessage.innerHTML = '';
       console.log(results);
       search = results.data.items;
-      if (results.data.items.length === 0) {
-        searchResults.innerHTML = `Aucun livre n'a été trouvé...`;
+      if (results.data.totalItems === 0) {
+        validationMessage.innerHTML = `<p class="errorMessage">Aucun livre n'a été trouvé...</p>`;
       } else {
         for (let i = 0; i < results.data.items.length; i++) {
 
           let image;
           if (results.data.items[i].volumeInfo.imageLinks === undefined) {
-            image = "unavailable.png"
+            image = "assets/unavailable.png"
           } else {
             image = results.data.items[i].volumeInfo.imageLinks.thumbnail;
           }
@@ -135,16 +135,14 @@ function cancel() {
   addBookDiv.innerHTML = `
     <button onclick="addBook()" type="button" class="btn-add btn btn-info">Ajouter un livre</button>`;
   searchResults.innerHTML = '';
+  validationMessage.innerHTML = '';
   search = [];
 }
 
 function deleteBook(bookId) {
   pochList = pochList.filter(book => book.id !== bookId);
   sessionStorage.setItem('savedBooks', JSON.stringify(pochList));
-  alertMessage.innerHTML = `
-  <div class="alert alert-success" role="alert">
-    Le livre a été supprimmé de votre Poch'List !
-  </div>`;
+  displayMessage('danger', "Le livre a été supprimmé de votre Poch'List ");
   displayPochList();
 }
 
@@ -158,7 +156,7 @@ function storeBook(bookId) {
   let id = book[0].id;
   let image;
   if (book[0].volumeInfo.imageLinks === undefined) {
-    image = "unavailable.png"
+    image = "assets/unavailable.png"
   } else {
     image = book[0].volumeInfo.imageLinks.thumbnail;
   }
@@ -200,17 +198,6 @@ function storeBook(bookId) {
 function displayPochList() {
   pochListDiv.innerHTML = '';
   for (let i = 0; i < pochList.length; i++) {
-    let image;
-    if (pochList[i].image === undefined) {
-      image = "unavailable.png"
-    } else {
-      image = pochList[i].image;
-    }
-
-    let description = pochList[i].description;
-    if (description === undefined) {
-      description = "Information manquante...";
-    }
     pochListDiv.innerHTML += `
           <div class="card col-xl-3 col-md-5 col-10">
             <svg class="trash" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
@@ -218,13 +205,13 @@ function displayPochList() {
             </svg>
             <div class="row no-gutters">
               <div class="col-4">
-                <img src="${image}" class="card-img-top" alt="${pochList[i].title}">
+                <img src="${pochList[i].image}" class="card-img-top" alt="${pochList[i].title}">
               </div>
               <div class="col-8">
                 <div class="card-body">
                   <h5 class="card-title">${pochList[i].title}</h5>
                   <p class="auteur card-text">Auteur : <strong>${pochList[i].author}</strong></p>
-                  <p class="description card-text">${description}</p>
+                  <p class="description card-text">${pochList[i].description}</p>
                   <p class="id">Id : ${pochList[i].id}</p>
                 </div>
               </div>
@@ -240,5 +227,3 @@ function displayMessage(type, message) {
   </div>`;
   setTimeout(() => {alertMessage.innerHTML = ''}, 4000);
 }
-
-//TODO : Hover pour le bookmark et Trash
