@@ -51,13 +51,13 @@ titleH2.after(alertMessage);
 function addBook() {
   addBookDiv.innerHTML = `
   <form>
-    <div class="col-10 form-group row">
+    <div class="col-12 form-group row">
       <label class="col-3 col-form-label" for="title">Titre</label>
         <div class="col-8">
           <input class="form-control" type="text" name="title" id="title" placeholder="Titre">
         </div>
     </div>
-    <div class="col-10 form-group row">
+    <div class="col-12 form-group row">
       <label class="col-3 col-form-label" for="author">Auteur</label>
         <div class="col-8">
           <input class="form-control" type="text" name="author" id="author" placeholder="Auteur">
