@@ -13,7 +13,7 @@ var pochList = [];
 var btnAdd = document.createElement('div');
 btnAdd.innerHTML = `
   <div class="addBook col-10">
-    <button onclick="addBook()" type="button" class="btn-add btn btn-info">Ajouter un livre</button>
+    <button onclick="addBook()" type="button" class="btn-add btn">Ajouter un livre</button>
   </div>`;
 titleH2.after(btnAdd);
 var addBookDiv = document.querySelector('.addBook');
@@ -54,7 +54,6 @@ function addBook() {
     <div class="col-11 form-group">
       <label class="col-s-3 form-label" for="title">Titre</label>
       <input class="col-s-8 form-control" type="text" name="title" id="title" placeholder="Titre">
-
     </div>
     <div class="col-11 form-group">
       <label class="col-s-3 form-label" for="author">Auteur</label>
@@ -71,6 +70,7 @@ function searchBook() {
   const authorInput = document.getElementById('author');
   let title = titleInput.value;
   let author = authorInput.value;
+  searchResults.innerHTML = '';
 
   if(title === '' || author === '') {
     validationMessage.innerHTML = `
@@ -216,7 +216,7 @@ function displayPochList() {
 
 function displayMessage(type, message) {
   alertMessage.innerHTML = `
-  <div class="alert alert-${type}" role="alert">
+  <div class="alert-${type}" role="alert">
     ${message}
   </div>`;
   setTimeout(() => {alertMessage.innerHTML = ''}, 4000);

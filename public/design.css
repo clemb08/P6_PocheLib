@@ -74,8 +74,10 @@ h2 {
   margin-top: 25px;
   margin-bottom: 25px;
 }
-
-.form-control {
+.form-group .form-label {
+  display: block;
+}
+.form-group .form-control {
   width: 80%;
   margin-right: 15px;
   margin-left: 15px;
@@ -145,6 +147,24 @@ h2 {
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-align: justify;
+}
+
+.alert-success {
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+  border-top: 1px ridge #40C3AC;
+  border-bottom: 1px ridge #40C3AC;
+  color: #40C3AC;
+}
+
+.alert-danger {
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+  border-top: 1px ridge #F54416;
+  border-bottom: 1px ridge #F54416;
+  color: #F54416;
 }
 
 @media only screen and (min-width: 600px) {
