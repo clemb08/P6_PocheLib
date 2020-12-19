@@ -51,20 +51,17 @@ titleH2.after(alertMessage);
 function addBook() {
   addBookDiv.innerHTML = `
   <form>
-    <div class="col-12 form-group row">
-      <label class="col-3 col-form-label" for="title">Titre</label>
-        <div class="col-8">
-          <input class="form-control" type="text" name="title" id="title" placeholder="Titre">
-        </div>
+    <div class="col-11 form-group">
+      <label class="col-s-3 form-label" for="title">Titre</label>
+      <input class="col-s-8 form-control" type="text" name="title" id="title" placeholder="Titre">
+
     </div>
-    <div class="col-12 form-group row">
-      <label class="col-3 col-form-label" for="author">Auteur</label>
-        <div class="col-8">
-          <input class="form-control" type="text" name="author" id="author" placeholder="Auteur">
-        </div>
+    <div class="col-11 form-group">
+      <label class="col-s-3 form-label" for="author">Auteur</label>
+      <input class="col-s-8 form-control" type="text" name="author" id="author" placeholder="Auteur">
     </div>
-    <button onclick="searchBook()" type="button" class="btn-search btn btn-info">Rechercher</button>
-    <button onclick="cancel()" type="button" class="btn-cancel btn btn-danger">Cancel</button>
+    <button onclick="searchBook()" type="button" class="btn-search btn">Rechercher</button>
+    <button onclick="cancel()" type="button" class="btn-cancel btn">Cancel</button>
   </form>`
 }
 
@@ -102,21 +99,20 @@ function searchBook() {
           }
 
           searchResults.innerHTML += `
-          <div class="card col-xl-3 col-md-5 col-10">
-              <svg class="bookmark" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="#40C3AC" xmlns="http://www.w3.org/2000/svg">
-                <path onclick="storeBook('${results.data.items[i].id}')" fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
-              </svg>
-            <div class="row no-gutters">
-              <div class="col-4">
+          <div class="card col-3 col-s-5">
+
+            <div class="card-content">
+              <div class="card-img col-4">
+              <svg class="icon" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="#40C3AC" xmlns="http://www.w3.org/2000/svg">
+              <path onclick="storeBook('${results.data.items[i].id}')" fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
+            </svg>
                 <img src="${image}" class="card-img-top" alt="${results.data.items[i].volumeInfo.title}">
               </div>
-              <div class="col-8">
-                <div class="card-body">
-                  <h5 class="card-title">${results.data.items[i].volumeInfo.title}</h5>
-                  <p class="auteur card-text">Auteur : <strong>${results.data.items[i].volumeInfo.authors[0]}</strong></p>
-                  <p class="description card-text">${description}</p>
-                  <p class="id">Id : ${results.data.items[i].id}</p>
-                </div>
+              <div class="card-body col-8">
+                <h5 class="card-title">${results.data.items[i].volumeInfo.title}</h5>
+                <p class="auteur">Auteur : <strong>${results.data.items[i].volumeInfo.authors[0]}</strong></p>
+                <p class="description">${description}</p>
+                <p class="id">Id : ${results.data.items[i].id}</p>
               </div>
             </div>
           </div>`
@@ -199,21 +195,19 @@ function displayPochList() {
   pochListDiv.innerHTML = '';
   for (let i = 0; i < pochList.length; i++) {
     pochListDiv.innerHTML += `
-          <div class="card col-xl-3 col-md-5 col-10">
-            <svg class="trash" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+          <div class="card col-3 col-s-5">
+            <svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
               <path onclick="deleteBook('${pochList[i].id}')" fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
             </svg>
-            <div class="row no-gutters">
-              <div class="col-4">
+            <div class="card-content">
+              <div class="card-img col-4">
                 <img src="${pochList[i].image}" class="card-img-top" alt="${pochList[i].title}">
               </div>
-              <div class="col-8">
-                <div class="card-body">
-                  <h5 class="card-title">${pochList[i].title}</h5>
-                  <p class="auteur card-text">Auteur : <strong>${pochList[i].author}</strong></p>
-                  <p class="description card-text">${pochList[i].description}</p>
-                  <p class="id">Id : ${pochList[i].id}</p>
-                </div>
+              <div class="card-body col-8">
+                <h5 class="card-title">${pochList[i].title}</h5>
+                <p class="auteur">Auteur : <strong>${pochList[i].author}</strong></p>
+                <p class="description">${pochList[i].description}</p>
+                <p class="id">Id : ${pochList[i].id}</p>
               </div>
             </div>
           </div>`
